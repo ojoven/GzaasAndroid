@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/styles" android:title="@string/styles" android:icon="@drawable/styles"/>
+	<item android:id="@+id/retype" android:title="@string/retype" android:icon="@drawable/keyboard"/>
+	<item android:id="@+id/send" android:title="@string/send" android:icon="@drawable/send"/>
+</menu>
