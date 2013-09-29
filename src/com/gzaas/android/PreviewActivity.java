@@ -47,7 +47,7 @@ public class PreviewActivity extends Activity {
         mText.setTextSize(70);
         mText.setTextColor(mStyle.getColor());
         mText.setTypeface(tf);
-        mText.setBackgroundColor(mStyle.getBackcolor());
+        mText.setBackgroundColor(mStyle.getBackgroundColor());
     }
     
     @Override
@@ -76,7 +76,7 @@ public class PreviewActivity extends Activity {
 					mText.setBackgroundColor(color);
 					mStyle.setBackgroundColor(color);
 				}
-			}, mStyle.getBackcolor()).show();
+			}, mStyle.getBackgroundColor()).show();
 			return true;
 			
 		case R.id.menu_color_text:
@@ -126,7 +126,7 @@ public class PreviewActivity extends Activity {
     	outState.putSerializable(KEY_STYLE, mStyle);
     	super.onSaveInstanceState(outState);
     }
-	
+    
 	private void start(Class<? extends Activity> clazz) {
 		Intent intent = new Intent(this, clazz);
 		intent.putExtra(KEY_MESSAGE, mMessage);
@@ -134,5 +134,5 @@ public class PreviewActivity extends Activity {
 		startActivity(intent);
 		finish();
 	}
-    
+	
 }

@@ -77,14 +77,14 @@ public class Connector {
 	 * @throws URISyntaxException 
 	 */
 	public String write(String apikey, String message, Style style) throws ClientProtocolException, IOException, JSONException, URISyntaxException {
-		ArrayList<BasicNameValuePair> parametros = new ArrayList<BasicNameValuePair>();
-		parametros.add(new BasicNameValuePair(KEY_APIKEY, apikey));
-		parametros.add(new BasicNameValuePair(KEY_MESSAGE, message));
-		parametros.add(new BasicNameValuePair(KEY_FONT, style.getFont()));
-		parametros.add(new BasicNameValuePair(KEY_COLOR, style.getColorString()));
-		parametros.add(new BasicNameValuePair(KEY_BACKCOLOR, style.getBackcolorString()));
+		ArrayList<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
+		parameters.add(new BasicNameValuePair(KEY_APIKEY, apikey));
+		parameters.add(new BasicNameValuePair(KEY_MESSAGE, message));
+		parameters.add(new BasicNameValuePair(KEY_FONT, style.getFont()));
+		parameters.add(new BasicNameValuePair(KEY_COLOR, style.getColorString()));
+		parameters.add(new BasicNameValuePair(KEY_BACKCOLOR, style.getBackgroundColorString()));
 		
-		UrlEncodedFormEntity data = new UrlEncodedFormEntity(parametros);
+		UrlEncodedFormEntity data = new UrlEncodedFormEntity(parameters);
 		HttpPost httppost = new HttpPost(new URI(METHOD_WRITE));
 		httppost.setEntity(data);
 		HttpResponse response = mHttpclient.execute(httppost);

@@ -9,7 +9,6 @@ public enum DefaultStyle {
    COMING_BLUE		("Coming Blue",		"comingsoon", 			"#ffffff",	"#00287B"),
    LUCKY_YELLOW		("Lucky Yellow",	"luckiestguy",			"#000000",	"#FFE303"),
    KRANKY_SIMPLE	("Kranky Simple",	"kranky", 				"#000000",	"#ffffff"),
-   CHRISTAMS		("It's Christmas!",	"mountainsofchristmas", "#ffffff",	"#EF0401"),
    FAIL				("You failed!",		"impactlabel", 			"#000000",	"#EF0401"),  
    GARDEN_MARKER	("Garden Marker",	"permanentmarker", 		"#4C2B11",	"#F8FF0D"),
    TRIBECA			("Tribeca",			"tribeca",				"#eeee00",	"#cc9933"),		
@@ -19,7 +18,8 @@ public enum DefaultStyle {
    BLODY_SCARY		("Bloody & Scary",	"bloody",				"#cc0011",	"#000000"),	
    SLACKEY			("Slackey",			"slackey",				"#ffffff",	"#99c9cc"),
    ORBITRON			("Orbitron",		"orbitron",				"#000000",	"#55ccff"),
-   REENIE_BEANIE	("Reenie Beanie",	"reeniebeanie",			"#77aaff",	"#116614");
+   REENIE_BEANIE	("Reenie Beanie",	"reeniebeanie",			"#77aaff",	"#116614"),
+   CHRISTAMS		("It's Christmas!",	"mountainsofchristmas", "#ffffff",	"#EF0401");
    
    String name;
    String font;

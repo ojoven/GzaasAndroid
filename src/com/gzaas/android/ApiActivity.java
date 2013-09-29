@@ -9,7 +9,7 @@ import android.os.Message;
 /**
  * Activity that mamage the API calls.
  */
-public class ApiActivity extends Activity {
+public abstract class ApiActivity extends Activity {
 
 	/**
      *	Api call handler.
@@ -42,5 +42,5 @@ public class ApiActivity extends Activity {
      * Handle the messages.
      * @param msg The incoming message.
      */
-	protected void handleMessage(Message msg) {}
+	protected abstract void handleMessage(Message msg);
 }

@@ -15,13 +15,13 @@ public class Style implements Serializable {
 	private String mName;
 	private String mFont;
 	private String mColor;
-	private String mBackcolor;
+	private String mBackgroundColor;
 
 	void setDefault(DefaultStyle style) {
 		mName = style.name;
 		mFont = style.font;
 		mColor = style.color;
-		mBackcolor = style.backcolor;
+		mBackgroundColor = style.backcolor;
 	}
 	
 	public String getName() {
@@ -40,12 +40,12 @@ public class Style implements Serializable {
 		return mColor;
 	}
 	
-	public int getBackcolor() {
-		return Color.parseColor(mBackcolor);
+	public int getBackgroundColor() {
+		return Color.parseColor(mBackgroundColor);
 	}
 
-	public String getBackcolorString() {
-		return mBackcolor;
+	public String getBackgroundColorString() {
+		return mBackgroundColor;
 	}
 	
 	public void setColor(int color) {
@@ -53,11 +53,17 @@ public class Style implements Serializable {
 	}
 	
 	public void setBackgroundColor(int color) {
-		mBackcolor = SHARP + Integer.toHexString(color);
+		mBackgroundColor = SHARP + Integer.toHexString(color);
 	}
 	
 	public void setFont(String font) {
 		mFont = font;
+	}
+
+	@Override
+	public String toString() {
+		return "Style [name=" + mName + ", font=" + mFont + ", color="
+				+ mColor + ", backgroundColor=" + mBackgroundColor + "]";
 	}
 
 	/**

@@ -60,7 +60,7 @@ public class StylesActivity extends Activity {
 				_covertView.setPadding(0, 20, 0, 20);
 				_covertView.setClickable(true);        
 				_covertView.setTextColor(style.getColor());
-	            _covertView.setBackgroundColor(style.getBackcolor());       
+	            _covertView.setBackgroundColor(style.getBackgroundColor());       
 	            _covertView.setTypeface(tf);
 	            _covertView.setOnClickListener(new OnClickListener() {
 					

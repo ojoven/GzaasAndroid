@@ -3,6 +3,7 @@ package com.gzaas.android.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,6 +25,7 @@ public class FontDialog extends BaseDialog {
 	public FontDialog(Context context) {
 		super(context);
 		ListView lv = new ListView(getContext());
+		lv.setBackgroundColor(getContext().getResources().getColor(R.color.translucent_black));
 		lv.setAdapter(new BaseAdapter() {
 			
 			@Override
@@ -49,15 +51,16 @@ public class FontDialog extends BaseDialog {
 				
 				final Style style = ((DefaultStyle) getItem(position)).style();
 				Typeface tf = Typeface.createFromAsset(getContext().getAssets(),"fonts/"+ style.getFont() +".ttf");
+				int width = parent.getWidth();
 				
-				//_convertView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+				_convertView.setWidth(width);
 				_convertView.setText(style.getName());
 				_convertView.setTag(position);
 				_convertView.setTextSize(24);
-				//_convertView.setGravity(Gravity.CENTER);
+				_convertView.setGravity(Gravity.CENTER);
 				_convertView.setPadding(0, 20, 0, 20);
 				_convertView.setClickable(true);        
-				_convertView.setTextColor(Color.BLACK);
+				_convertView.setTextColor(Color.WHITE);
 	            _convertView.setBackgroundResource(R.drawable.bg_selected);       
 	            _convertView.setTypeface(tf);
 	            _convertView.setOnClickListener(new View.OnClickListener() {

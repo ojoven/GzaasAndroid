@@ -7,7 +7,7 @@ import android.view.Window;
 /**
  * Empty base dialog.
  */
-public abstract class BaseDialog extends Dialog{
+public abstract class BaseDialog extends Dialog {
 
 	public BaseDialog(Context context) {
 		super(context);
