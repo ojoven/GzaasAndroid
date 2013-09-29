@@ -16,7 +16,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/gzaas_logo"
+            android:src="@drawable/logo"
             android:contentDescription="@string/cd_logo" >
         </ImageView>
     </LinearLayout>

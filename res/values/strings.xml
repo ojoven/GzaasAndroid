@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	
+    <!-- Home -->
     <string name="app_name">gzaas!</string>
     <string name="slogan">My full screen messages.</string>
     <string name="app_preview">gzaas! preview and editor</string>
@@ -20,6 +21,9 @@
     <string name="menu_color_text">Text color</string>
     <string name="menu_color_background">Background color</string>
     <string name="menu_font">Font</string>
+    
+    <!-- Styles -->
+    <string name="select_style">Select default style</string>
     
     <!-- Send -->
     <string name="share">Share this link:</string>
