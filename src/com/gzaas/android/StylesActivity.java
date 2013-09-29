@@ -1,126 +1,93 @@
 package com.gzaas.android;
 
-//import com.gzaas.android.R;
-
-
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gzaas.android.style.DefaultStyle;
+import com.gzaas.android.style.Style;
+
 public class StylesActivity extends Activity {
-    /** Called when the activity is first created. */
-    LinearLayout linear;
-    TextView text;
-    private StyleDataHelper dh;
-    private int position;
-    public String message;
-    
+
     @Override    
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_styles);
         
-        // Recogemos los parámetros pasados desde el Activity que ha llamado a Styles
         Bundle extras = getIntent().getExtras();
-        message = extras.getString("MESSAGE");
-       
-        // Creamos la estructura del layout
-        linear = new LinearLayout(this);
-        linear.setOrientation(LinearLayout.VERTICAL);
-        linear.setBackgroundColor(Color.parseColor("#ffffff"));
-        linear.setScrollContainer(true);
+        final String message = extras.getString(PreviewActivity.KEY_MESSAGE);
         
-        // Insertamos el header y sus características
-        text = new TextView(this);
-        text.setText("Select your style");
-        text.setTextSize(24);
-        text.setGravity(Gravity.CENTER);
-        text.setPadding(0, 10, 0, 10);
-        text.setTextColor(Color.parseColor("#000000"));        
-        text.setBackgroundColor(Color.parseColor("#ffffff"));
-        
-        linear.addView(text);
-        
-        //Abrimos la base de datos 'DBUsuarios' en modo escritura
-        dh = new StyleDataHelper(this);
-        /*
-        //Borramos los elementos previos
-        dh.deleteAll();
-        // Insertamos los elementos por defecto
-        dh.insertDefault();*/  
-        
-        // Recogemos los elementos de BD
-        List<Style> styles = dh.selectAll();
-        
-        position = 0;
-    	// Para cada estilo recogido        
-        for (Style style : styles) {
-        	
-
-        	// Creamos un text view y le asignamos el nombre del estilo
-            text = new TextView(this);
-            text.setText(style.getName());
-            
-        	// Guardamos en un tag su posición en la "lista"
-            PositionVO positionVO = new PositionVO();
-            positionVO.setPosition(position);
-        	text.setTag(positionVO);            
-            
-            // Características comunes (Tamaño de letra / Alineación)
-            text.setTextSize(24);
-            text.setGravity(Gravity.CENTER);
-            text.setPadding(0, 20, 0, 20);
-            
-            // Características propias
-            
-            // Tipografía del estilo
-            String font = style.getFont();
-            Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/"+font+".ttf");
-            text.setTypeface(tf);
-            
-            // Color de fuente del estilo
-            String color = style.getColor();
-            text.setTextColor(Color.parseColor(color));
-            
-            // Color de fondo del estilo
-            String backcolor = style.getBackcolor();
-            text.setBackgroundColor(Color.parseColor(backcolor));
-            
-            // Clickable
-            text.setClickable(true);
-
-            text.setOnClickListener(new OnClickListener() {
-    			
-    			public void onClick(View v) {
-    				// TODO Auto-generated method stub
-
-    				Intent intentPreview;
-    				intentPreview = new Intent(StylesActivity.this, PreviewActivity.class);
-    				
-    				intentPreview.putExtra("MESSAGE", message);
-    				PositionVO positionVO = (PositionVO) v.getTag();
-    				intentPreview.putExtra("STYLE_POS", positionVO.getPosition());
-
-    				
-    		    	startActivity(intentPreview);
-    			}
-    		});
-            
-            linear.addView(text);
-            position++;
-         }
-
-
-        setContentView(linear);
-
-    }  
+        ListView lv = (ListView) findViewById(R.id.lv_styles);
+        lv.setAdapter(new BaseAdapter() {
+			
+			@Override
+			public long getItemId(int position) {
+				return position;
+			}
+			
+			@Override
+			public Object getItem(int position) {
+				return DefaultStyle.values()[position];
+			}
+			
+			@Override
+			public int getCount() {
+				return DefaultStyle.values().length;
+			}
+			
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
+				TextView _covertView = (TextView) convertView;
+				if ( _covertView == null )
+					_covertView = new TextView(getApplicationContext());
+				
+				final Style style = ((DefaultStyle) getItem(position)).style();
+				Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/"+ style.getFont() +".ttf");
+				
+				_covertView.setText(style.getName());
+				_covertView.setTag(position);
+				_covertView.setTextSize(24);
+				_covertView.setGravity(Gravity.CENTER);
+				_covertView.setPadding(0, 20, 0, 20);
+				_covertView.setClickable(true);        
+				_covertView.setTextColor(style.getColor());
+	            _covertView.setBackgroundColor(style.getBackcolor());       
+	            _covertView.setTypeface(tf);
+	            _covertView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getApplicationContext(), PreviewActivity.class);
+						intent.putExtra(PreviewActivity.KEY_MESSAGE, message);
+						intent.putExtra(PreviewActivity.KEY_STYLE, style);
+						startActivity(intent);
+						finish();
+					}
+				});
+				return _covertView;
+			}
+		});
+    }
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+    		Intent intent = new Intent(this, PreviewActivity.class);
+    		intent.putExtras(getIntent().getExtras());
+    		startActivity(intent);
+    		finish();
+    		return true;
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
     
 }

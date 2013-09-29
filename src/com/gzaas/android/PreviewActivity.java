@@ -1,96 +1,138 @@
 package com.gzaas.android;
 
-import com.gzaas.android.R;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.gzaas.android.style.Style;
+import com.gzaas.android.widget.ColorPickerDialog;
+import com.gzaas.android.widget.ColorPickerDialog.OnColorChangedListener;
+import com.gzaas.android.widget.FontDialog;
+import com.gzaas.android.widget.FontDialog.OnFontChangedListener;
 
 public class PreviewActivity extends Activity {
-    /** Called when the activity is first created. */
+
+	public static final String	KEY_MESSAGE = "text";
+	public static final String	KEY_STYLE 	= "style";
 	
-    private StyleDataHelper dh;
-    private String message;
-    private int stylePos;
+	private String				mMessage;
+	private Style				mStyle;
+	private TextView 			mText;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.preview);
+        setContentView(R.layout.activity_preview);
         
-        // We take the parameters from the Activity which called PreviewActivity
-        Bundle extras = getIntent().getExtras();
-        message = extras.getString("MESSAGE");
-        stylePos = extras.getInt("STYLE_POS");
+        if ( savedInstanceState == null ) {
+	        Bundle extras = getIntent().getExtras();
+	        mMessage = extras.getString(KEY_MESSAGE);
+	        mStyle = (Style) extras.getSerializable(KEY_STYLE);
+        }
+        else {
+        	mMessage = savedInstanceState.getString(KEY_MESSAGE);
+        	mStyle = (Style) savedInstanceState.getSerializable(KEY_STYLE);
+        }
         
-        // Escribimos el mensaje en el layout
-        TextView text = (TextView)findViewById(R.id.message);
-        text.setText(message);
-        text.setTextSize(70);
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/"+mStyle.getFont()+".ttf");
         
-        // Recogemos un estilo al azar desde la BD
-        dh = new StyleDataHelper(this);
-        dh.deleteAll();
-        dh.insertDefault();
-        Style style = dh.selectOne(stylePos);        
-        
-        // Tipografía del estilo
-        String font = style.getFont();
-        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/"+font+".ttf");
-        text.setTypeface(tf);
-        
-        // Color de fuente del estilo
-        String color = style.getColor();
-        text.setTextColor(Color.parseColor(color));
-        
-        // Color de fondo del estilo
-        LinearLayout background = (LinearLayout)findViewById(R.id.preview_background);
-        String backcolor = style.getBackcolor();
-        background.setBackgroundColor(Color.parseColor(backcolor));
-
+        mText = (TextView) findViewById(R.id.message);
+        mText.setText(mMessage);
+        mText.setTextSize(70);
+        mText.setTextColor(mStyle.getColor());
+        mText.setTypeface(tf);
+        mText.setBackgroundColor(mStyle.getBackcolor());
     }
     
-    /*
-     * (non-Javadoc)
-     * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-     * Creamos un menú
-     */
-    
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.layout.menu, menu);
+		inflater.inflate(R.menu.preview, menu);
 		return true;
 	}
+    
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.styles:
-			Intent intentStyles = new Intent(PreviewActivity.this, StylesActivity.class);
-			intentStyles.putExtra("MESSAGE", message);
-			startActivity(intentStyles);
+		case R.id.menu_styles:
+			start(StylesActivity.class);
 			return true;
-		/*
-		case R.id.retype:
-			Intent intentKeyboard = new Intent(PreviewActivity.this, KeyboardActivity.class);*/
-		case R.id.send: 
-			Intent intentSend = new Intent(PreviewActivity.this, SendActivity.class);
-			intentSend.putExtra("MESSAGE", message);
-			intentSend.putExtra("STYLES_POS", message);
-			startActivity(intentSend);
+			
+		case R.id.menu_send:
+			start(SendActivity.class);
 			return true;
+		
+		case R.id.menu_color_background:
+	        new ColorPickerDialog(this, new OnColorChangedListener() {
+				
+				@Override
+				public void colorChanged(int color) {
+					mText.setBackgroundColor(color);
+					mStyle.setBackgroundColor(color);
+				}
+			}, mStyle.getBackcolor()).show();
+			return true;
+			
+		case R.id.menu_color_text:
+	        new ColorPickerDialog(this, new OnColorChangedListener() {
+				
+				@Override
+				public void colorChanged(int color) {
+					mText.setTextColor(color);
+					mStyle.setColor(color);
+				}
+			}, mStyle.getColor()).show();
+			return true;
+			
+		case R.id.menu_font:
+			FontDialog dialog = new FontDialog(this);
+			dialog.setOnFontChanged(new OnFontChangedListener() {
+				
+				@Override
+				public void onFontChanged(String font) {
+					Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/"+font+".ttf");
+					mText.setTypeface(tf);
+					mStyle.setFont(font);
+				}
+			});
+			dialog.show();
+			return true;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}  
+	}
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+    		Intent intent = new Intent(this, HomeActivity.class);
+    		startActivity(intent);
+    		finish();
+    		return true;
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	outState.putString(KEY_MESSAGE, mMessage);
+    	outState.putSerializable(KEY_STYLE, mStyle);
+    	super.onSaveInstanceState(outState);
+    }
+	
+	private void start(Class<? extends Activity> clazz) {
+		Intent intent = new Intent(this, clazz);
+		intent.putExtra(KEY_MESSAGE, mMessage);
+		intent.putExtra(KEY_STYLE, mStyle);
+		startActivity(intent);
+		finish();
+	}
     
 }

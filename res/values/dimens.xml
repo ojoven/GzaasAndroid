@@ -1,0 +1,13 @@
+<resources>
+
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_medium">16dp</dimen>
+    <dimen name="space_big">24dp</dimen>
+    <dimen name="space_huge">32dp</dimen>
+    
+    <dimen name="text_small">8sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_big">24sp</dimen>
+    <dimen name="text_huge">36sp</dimen>
+
+</resources>
