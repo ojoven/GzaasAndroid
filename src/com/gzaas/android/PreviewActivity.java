@@ -13,9 +13,12 @@ import android.widget.TextView;
 import com.gzaas.android.style.Style;
 import com.gzaas.android.widget.ColorPickerDialog;
 import com.gzaas.android.widget.ColorPickerDialog.OnColorChangedListener;
-import com.gzaas.android.widget.FontDialog;
-import com.gzaas.android.widget.FontDialog.OnFontChangedListener;
+import com.gzaas.android.widget.FontSelectorDialog;
+import com.gzaas.android.widget.FontSelectorDialog.OnFontChangedListener;
 
+/**
+ *	Preview the message with selected style.
+ */
 public class PreviewActivity extends Activity {
 
 	public static final String	KEY_MESSAGE = "text";
@@ -91,7 +94,7 @@ public class PreviewActivity extends Activity {
 			return true;
 			
 		case R.id.menu_font:
-			FontDialog dialog = new FontDialog(this);
+			FontSelectorDialog dialog = new FontSelectorDialog(this);
 			dialog.setOnFontChanged(new OnFontChangedListener() {
 				
 				@Override

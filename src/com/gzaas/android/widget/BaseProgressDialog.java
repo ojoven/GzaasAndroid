@@ -19,10 +19,18 @@ public class BaseProgressDialog extends BaseDialog {
 		mMessage = (TextView) findViewById(R.id.message);
 	}
 
+	/**
+	 * Set the message of the dialog.
+	 * @param msg The message.
+	 */
 	public void setMessage (String msg) {
 		mMessage.setText(msg);
 	}
 
+	/**
+	 * Set the message from resources.
+	 * @param resId The resource id.
+	 */
 	public void setMessage (int resId) {
 		mMessage.setText(resId);
 	}

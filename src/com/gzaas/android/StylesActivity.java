@@ -16,6 +16,9 @@ import android.widget.TextView;
 import com.gzaas.android.style.DefaultStyle;
 import com.gzaas.android.style.Style;
 
+/**
+ * Default style selector activity.
+ */
 public class StylesActivity extends Activity {
 
     @Override    

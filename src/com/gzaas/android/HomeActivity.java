@@ -27,6 +27,9 @@ import com.gzaas.android.style.Style;
 import com.gzaas.android.widget.AlertDialogHelper;
 import com.gzaas.android.widget.BaseProgressDialog;
 
+/**
+ *	Home activity.
+ */
 public class HomeActivity extends ApiActivity {
 	
 	private static final String		TAG = HomeActivity.class.getName();

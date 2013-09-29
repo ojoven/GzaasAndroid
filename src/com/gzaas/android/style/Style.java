@@ -24,38 +24,68 @@ public class Style implements Serializable {
 		mBackgroundColor = style.backcolor;
 	}
 	
+	/**
+	 * @return The name of the {@link DefaultStyle} that is based.
+	 */
 	public String getName() {
 		return mName;
 	}
 
+	/**
+	 * @return The font.
+	 */
 	public String getFont() {
 		return mFont;
 	}
 	
+	/**
+	 * @return The color.
+	 */
 	public int getColor() {
 		return Color.parseColor(mColor);
 	}
 
+	/**
+	 * @return The color in string format: #1a1a1a.
+	 */
 	public String getColorString() {
 		return mColor;
 	}
 	
+	/**
+	 * @return The background color.
+	 */
 	public int getBackgroundColor() {
 		return Color.parseColor(mBackgroundColor);
 	}
 
+	/**
+	 * @return The background color in string format: #1a1a1a.
+	 */
 	public String getBackgroundColorString() {
 		return mBackgroundColor;
 	}
 	
+	/**
+	 * Set the color.
+	 * @param color The color.
+	 */
 	public void setColor(int color) {
 		mColor = SHARP + Integer.toHexString(color);
 	}
 	
+	/**
+	 * Set the background color.
+	 * @param color The color.
+	 */
 	public void setBackgroundColor(int color) {
 		mBackgroundColor = SHARP + Integer.toHexString(color);
 	}
 	
+	/**
+	 * Set the font.
+	 * @param font The font.
+	 */
 	public void setFont(String font) {
 		mFont = font;
 	}
@@ -67,7 +97,7 @@ public class Style implements Serializable {
 	}
 
 	/**
-	 * @return A predefined random style. 
+	 * @return A predefined random style from {@link DefaultStyle}. 
 	 */
 	public static Style random() {
 		int index = (int) (Math.random() * DefaultStyle.values().length);

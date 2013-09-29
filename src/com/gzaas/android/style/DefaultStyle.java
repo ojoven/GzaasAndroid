@@ -1,7 +1,7 @@
 package com.gzaas.android.style;
 
 /**
- * The predefined styles.
+ * The predefined styles for the messages.
  */
 public enum DefaultStyle {
 	
@@ -33,6 +33,9 @@ public enum DefaultStyle {
 	   this.backcolor = backcolor;
    }
    
+   /**
+    * @return The style of the default style.
+    */
    public Style style() {
 	   Style style = new Style();
 	   style.setDefault(this);

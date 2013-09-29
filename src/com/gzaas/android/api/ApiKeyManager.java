@@ -16,6 +16,10 @@ public class ApiKeyManager {
 		mPrefs = context.getSharedPreferences(PREFS_TAG, Context.MODE_PRIVATE);
 	}
 	
+	/**
+	 * @param context The aplication context.
+	 * @return The unique instance of ApiKeyManager.
+	 */
 	public static ApiKeyManager get(Context context) {
 		if ( sInstance == null )
 			sInstance = new ApiKeyManager(context);

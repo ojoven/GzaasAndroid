@@ -21,7 +21,7 @@ import com.gzaas.android.style.Style;
 import com.gzaas.android.util.Utils;
 
 /**
- * API Conector.
+ *	API Conector.
  */
 public class Connector {
 	
@@ -42,6 +42,9 @@ public class Connector {
 		mHttpclient = new DefaultHttpClient();
 	}
 	
+	/**
+	 * @return The unique instance of Connector.
+	 */
 	public static Connector get() {
 		if ( sInstance == null )
 			sInstance = new Connector();

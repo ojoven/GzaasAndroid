@@ -29,6 +29,9 @@ import com.gzaas.android.api.Connector;
 import com.gzaas.android.style.Style;
 import com.gzaas.android.widget.AlertDialogHelper;
 
+/**
+ *	Send activity
+ */
 public class SendActivity extends ApiActivity implements OnClickListener {
 	
 	private static final String KEY_URL = "url";

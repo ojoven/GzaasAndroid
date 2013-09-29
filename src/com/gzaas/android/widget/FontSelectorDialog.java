@@ -14,15 +14,25 @@ import com.gzaas.android.R;
 import com.gzaas.android.style.DefaultStyle;
 import com.gzaas.android.style.Style;
 
-public class FontDialog extends BaseDialog {
+/**
+ *	Font selector dialog.
+ */
+public class FontSelectorDialog extends BaseDialog {
 	
+	/**
+	 *	Interface definition for a callback to be invoked when a font is selected.
+	 */
     public interface OnFontChangedListener {
+    	/**
+    	 * Called when a font has been selected.
+    	 * @param font The font.
+    	 */
         void onFontChanged(String font);
     }
     
     private OnFontChangedListener mListener;
 
-	public FontDialog(Context context) {
+	public FontSelectorDialog(Context context) {
 		super(context);
 		ListView lv = new ListView(getContext());
 		lv.setBackgroundColor(getContext().getResources().getColor(R.color.translucent_black));
@@ -78,6 +88,10 @@ public class FontDialog extends BaseDialog {
 		setContentView(lv);
 	}
 	
+	/**
+	 * Register a callback to be invoked when a font is selected.
+	 * @param listener The callback that will run. 
+	 */
 	public void setOnFontChanged(OnFontChangedListener listener) {
 		mListener = listener;
 	}
