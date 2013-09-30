@@ -6,7 +6,13 @@
     <string name="gzaasit">gzaas it!</string>
     <string name="loading">Loading</string>
     <string name="info_title">Info</string>
-    <string name="info_message"></string>
+	<string name="info_message">
+        <![CDATA[
+        <p>This is a open source <a href="http://gzaas.com">gzaas.com</a> client for Android.
+        The code is hosted in <a href="https://github.com/charlescarmichael/GzaasAndroid">Github</a>.</p>
+        By <a href="http://www.capsule.es" >Capsule StudIO</a>.
+        ]]>
+    </string>
     <string name="cd_logo">The App logo.</string>
     <string name="menu_info">Info</string>
     <string name="menu_styles">Select style</string>
