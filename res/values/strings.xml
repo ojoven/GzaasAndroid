@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">gzaas!</string>
+    <string name="slogan">My full screen messages.</string>
+    <string name="gzaasit">gzaas it!</string>
+    <string name="loading">Loading</string>
+    <string name="info_title">Info</string>
+	<string name="info_message">
+        <![CDATA[
+        <p>This is a open source <a href="http://gzaas.com">gzaas.com</a> client for Android.
+        The code is hosted in <a href="https://github.com/charlescarmichael/GzaasAndroid">Github</a>.</p>
+        By <a href="http://www.capsule.es" >Capsule StudIO</a>.
+        ]]>
+    </string>
+    <string name="cd_logo">The App logo.</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_styles">Select style</string>
+    <string name="menu_send">Send your gzaas!</string>
+    <string name="menu_more">More</string>
+    <string name="menu_color_text">Text color</string>
+    <string name="menu_color_background">Background color</string>
+    <string name="menu_font">Font</string>
+    <string name="select_style">Select default style</string>
+    <string name="share">Share this link:</string>
+    <string name="copy">Copy</string>
+    <string name="mail">Mail</string>
+    <string name="gnew">New</string>
+
+</resources>
