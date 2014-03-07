@@ -19,3 +19,9 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+.settings
+
+# Ant stuff
+ant.properties
+android-keystore
+
