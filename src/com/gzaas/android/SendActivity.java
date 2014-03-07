@@ -1,11 +1,5 @@
 package com.gzaas.android;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,10 +28,11 @@ import com.gzaas.android.widget.AlertDialogHelper;
  */
 public class SendActivity extends ApiActivity implements OnClickListener {
 	
+	private static final String TAG ="SendActivity";
 	private static final String KEY_URL = "url";
 	private String				mURL;
 	private TextView 			mUrlTextView;
-	private ProgressBar 		mProgress;
+ 	private ProgressBar 		mProgress;
 	private LinearLayout		mButtonsLayout;
     
     @Override    
@@ -145,11 +140,9 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 					Log.d("", "callServer() apikey=" + apikey);
 					mURL = Connector.get().write(apikey, message, style);
 					getHandler().sendEmptyMessage(0);
-				} catch (ClientProtocolException e) {
-				} catch (IOException e) {
-				} catch (JSONException e) {
-				} catch (URISyntaxException e) {
-				} //TODO
+				} catch (Exception e) {
+					Log.e(TAG, "Could not sent the message!", e);
+				}
 			}
 		});
     	thread.start();

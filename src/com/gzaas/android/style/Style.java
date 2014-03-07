@@ -10,7 +10,8 @@ import android.graphics.Color;
 public class Style implements Serializable {
 
 	private static final long serialVersionUID = 7397617962458923837L;
-	private static final char SHARP = '#';
+	private static final Character SHARP = '#';
+	private static final String PARSE = "";
 
 	private String mName;
 	private String mFont;
@@ -52,6 +53,10 @@ public class Style implements Serializable {
 		return mColor;
 	}
 	
+	public String getColorURI() {
+		return mColor.replace(SHARP.toString(), PARSE);
+	}
+	
 	/**
 	 * @return The background color.
 	 */
@@ -64,6 +69,10 @@ public class Style implements Serializable {
 	 */
 	public String getBackgroundColorString() {
 		return mBackgroundColor;
+	}
+	
+	public String getBackgroundColorURI() {
+		return mBackgroundColor.replace(SHARP.toString(), PARSE);
 	}
 	
 	/**
