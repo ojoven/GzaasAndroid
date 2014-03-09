@@ -2,6 +2,7 @@ package com.gzaas.android.widget;
 
 import android.content.Context;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 
 import com.gzaas.android.R;
@@ -24,6 +25,7 @@ public class EditDialog extends BaseDialog {
 	public EditDialog(Context context, String msg) {
 		super(context);
 		setContentView(R.layout.dialog_edit);
+		getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		
 		final EditText message = (EditText) findViewById(R.id.et_message);
 		message.setText(msg);

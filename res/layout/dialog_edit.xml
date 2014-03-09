@@ -11,6 +11,7 @@
         android:id="@+id/et_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/space_small"
         android:inputType="text" />
 
     <LinearLayout
@@ -21,15 +22,21 @@
 
         <Button
             android:id="@+id/btn_ok"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:padding="@dimen/space_small"
             android:background="@drawable/btn_round"
             android:text="@android:string/ok" />
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:padding="@dimen/space_small"
             android:background="@drawable/btn_round"
             android:text="@android:string/cancel" />
     </LinearLayout>
