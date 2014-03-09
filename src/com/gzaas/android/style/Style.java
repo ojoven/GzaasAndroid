@@ -80,7 +80,7 @@ public class Style implements Serializable {
 	 * @param color The color.
 	 */
 	public void setColor(int color) {
-		mColor = SHARP + Integer.toHexString(color);
+		mColor = SHARP + Integer.toHexString(color).substring(2);
 	}
 	
 	/**
