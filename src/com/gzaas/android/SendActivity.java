@@ -29,7 +29,6 @@ import com.gzaas.android.widget.AlertDialogHelper;
 public class SendActivity extends ApiActivity implements OnClickListener {
 	
 	private static final String TAG ="SendActivity";
-	private static final String KEY_URL = "url";
 	private String				mURL;
 	private TextView 			mUrlTextView;
  	private ProgressBar 		mProgress;
@@ -45,18 +44,11 @@ public class SendActivity extends ApiActivity implements OnClickListener {
         mButtonsLayout = (LinearLayout) findViewById(R.id.ll_buttons);
         
         /* Call server */
-        if ( savedInstanceState == null ) {
-        	setLoading(true);
-        	Bundle extras = getIntent().getExtras();
-            String message = extras.getString(PreviewActivity.KEY_MESSAGE);
-            Style style = (Style) extras.getSerializable(PreviewActivity.KEY_STYLE);
-            callServer(message, style);
-        }
-        /* Show URL */
-        else {
-        	mURL = savedInstanceState.getString(KEY_URL);
-        	setURLView();
-        }
+    	setLoading(true);
+    	Bundle extras = getIntent().getExtras();
+        String message = extras.getString(PreviewActivity.KEY_MESSAGE);
+        Style style = (Style) extras.getSerializable(PreviewActivity.KEY_STYLE);
+        callServer(message, style);
         
         /* Buttons */
         Button btnCopy = (Button) findViewById(R.id.btn_copy);
@@ -92,14 +84,16 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 	    	startActivity(home);
 	    	finish(); 	
 			break;
+			
+		case -1: //Share
+			Intent sendIntent = new Intent();
+			sendIntent.setAction(Intent.ACTION_SEND);
+			sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+			sendIntent.setType("text/plain");
+			startActivity(sendIntent);
+			break;
 		}
 	}
-    
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-    	outState.putString(KEY_URL, mURL);
-    	super.onSaveInstanceState(outState);
-    }
     
     @Override
 	public boolean onCreateOptionsMenu (Menu opcion) {

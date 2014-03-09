@@ -27,7 +27,7 @@ import com.gzaas.android.widget.ProgressDialog;
  */
 public class HomeActivity extends ApiActivity {
 	
-	private static final String		TAG = HomeActivity.class.getName();
+	private static final String	TAG = HomeActivity.class.getName();
 	private ProgressDialog		mProgressDialog;
 		
     @Override
