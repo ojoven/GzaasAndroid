@@ -52,15 +52,13 @@ public class SendActivity extends ApiActivity implements OnClickListener {
         
         /* Buttons */
         Button btnCopy = (Button) findViewById(R.id.btn_copy);
-        Button btnMail = (Button) findViewById(R.id.btn_mail);
         Button btnGnew = (Button) findViewById(R.id.btn_gnew);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/chewy.ttf");
         btnCopy.setTypeface(tf);
-        btnMail.setTypeface(tf);
         btnGnew.setTypeface(tf);
         btnCopy.setOnClickListener(this);
-        btnMail.setOnClickListener(this);
         btnGnew.setOnClickListener(this);
+        findViewById(R.id.btn_share).setOnClickListener(this);
     }
     
 	@Override
@@ -72,25 +70,18 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 	    	Toast.makeText(this, "copy to clipboard",  Toast.LENGTH_SHORT).show();
 			break;
 			
-		case R.id.btn_mail:
-			Intent email = new Intent(android.content.Intent.ACTION_SEND);
-	        email.setType("plain/text");
-	        email.putExtra(android.content.Intent.EXTRA_TEXT, mURL);
-	        startActivity(Intent.createChooser(email, "Send mail..."));
+		case R.id.btn_share:
+			Intent share = new Intent();
+			share.setAction(Intent.ACTION_SEND);
+			share.putExtra(Intent.EXTRA_TEXT, mURL);
+			share.setType("text/plain");
+			startActivity(share);
 			break;
 			
 		case R.id.btn_gnew:
 			Intent home = new Intent(this, HomeActivity.class);
 	    	startActivity(home);
 	    	finish(); 	
-			break;
-			
-		case -1: //Share
-			Intent sendIntent = new Intent();
-			sendIntent.setAction(Intent.ACTION_SEND);
-			sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-			sendIntent.setType("text/plain");
-			startActivity(sendIntent);
 			break;
 		}
 	}
@@ -116,7 +107,8 @@ public class SendActivity extends ApiActivity implements OnClickListener {
     
     @Override
     protected void handleMessage(Message msg) {
-    	setURLView();
+    	setLoading(false);
+    	mUrlTextView.setText(mURL);
     }
     
     /**
@@ -148,9 +140,4 @@ public class SendActivity extends ApiActivity implements OnClickListener {
     	mButtonsLayout.setVisibility(loading ? View.INVISIBLE : View.VISIBLE);
     }
     
-    private void setURLView() {
-    	setLoading(false);
-    	mUrlTextView.setText(mURL);
-    }
-
 }
