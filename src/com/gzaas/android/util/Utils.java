@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.provider.Settings;
 
 /**
  *	Utils.
@@ -43,6 +44,14 @@ public class Utils {
         } else {
             return false;
         }
+    }
+    
+    /**
+     * @param context The context of the application.
+     * @return The device id.
+     */
+    public static String getDeviceId(Context context) { 
+            return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
     
 }

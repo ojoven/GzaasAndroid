@@ -19,6 +19,9 @@
             <item
                 android:id="@+id/menu_font"
                 android:title="@string/menu_font"/>
+            <item
+                android:id="@+id/menu_text"
+                android:title="@string/menu_text"/>
         </menu>
     </item>
     <item

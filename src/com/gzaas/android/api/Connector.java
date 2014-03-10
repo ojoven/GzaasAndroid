@@ -4,18 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.gzaas.android.style.Style;
 import com.gzaas.android.util.Utils;
@@ -25,8 +23,8 @@ import com.gzaas.android.util.Utils;
  */
 public class Connector {
 	
-	private static final String METHOD_KEY 		= "http://gzaas.com/getapikey?contact=android";
-	private static final String METHOD_WRITE 	= "http://gzaas.com/api/v1/write";
+	private static final String METHOD_KEY 		= "http://gzaas.com/getapikey?contact=android-";
+	private static final String METHOD_WRITE 	= "http://gzaas.com/api/v1/write?";
 	private static final String KEY_GET_APIKEY	= "apiKey";
 	private static final String KEY_APIKEY		= "apikey";
 	private static final String KEY_MESSAGE		= "message";
@@ -58,8 +56,8 @@ public class Connector {
 	 * @throws ClientProtocolException 
 	 * @throws JSONException 
 	 */
-	public String apikey() throws URISyntaxException, ClientProtocolException, IOException, JSONException {
-		HttpGet httpget = new HttpGet(new URI(METHOD_KEY));
+	public String apikey(String deviceId) throws URISyntaxException, ClientProtocolException, IOException, JSONException {
+		HttpGet httpget = new HttpGet(new URI(METHOD_KEY +deviceId));
 		HttpResponse response = mHttpclient.execute(httpget);
 		HttpEntity resEntity = response.getEntity();
 		InputStream is = resEntity.getContent();
@@ -69,7 +67,7 @@ public class Connector {
 	}
 	
 	/**
-	 * Post a new gzaas message.
+	 * Write a new gzaas message.
 	 * @param apikey The API Key.
 	 * @param message The message.
 	 * @param style The style of the message.
@@ -80,17 +78,20 @@ public class Connector {
 	 * @throws URISyntaxException 
 	 */
 	public String write(String apikey, String message, Style style) throws ClientProtocolException, IOException, JSONException, URISyntaxException {
-		ArrayList<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
-		parameters.add(new BasicNameValuePair(KEY_APIKEY, apikey));
-		parameters.add(new BasicNameValuePair(KEY_MESSAGE, message));
-		parameters.add(new BasicNameValuePair(KEY_FONT, style.getFont()));
-		parameters.add(new BasicNameValuePair(KEY_COLOR, style.getColorString()));
-		parameters.add(new BasicNameValuePair(KEY_BACKCOLOR, style.getBackgroundColorString()));
+		final String EQUAL = "=";
+		final String APPEND = "&";
+		StringBuilder urlBuilder = new StringBuilder()
+			.append(METHOD_WRITE)
+			.append(KEY_APIKEY).append(EQUAL).append(apikey).append(APPEND)
+			.append(KEY_MESSAGE).append(EQUAL).append(message).append(APPEND)
+			.append(KEY_FONT).append(EQUAL).append(style.getFont()).append(APPEND)
+			.append(KEY_COLOR).append(EQUAL).append(style.getColorURI()).append(APPEND)
+			.append(KEY_BACKCOLOR).append(EQUAL).append(style.getBackgroundColorURI());
+
+		Log.i("", "URL=" + urlBuilder.toString());
 		
-		UrlEncodedFormEntity data = new UrlEncodedFormEntity(parameters);
-		HttpPost httppost = new HttpPost(new URI(METHOD_WRITE));
-		httppost.setEntity(data);
-		HttpResponse response = mHttpclient.execute(httppost);
+		HttpGet httpget = new HttpGet(URI.create(urlBuilder.toString()));
+		HttpResponse response = mHttpclient.execute(httpget);
 
 		HttpEntity resEntity = response.getEntity();
 		InputStream is = resEntity.getContent();

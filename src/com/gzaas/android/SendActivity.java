@@ -1,11 +1,5 @@
 package com.gzaas.android;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,10 +28,10 @@ import com.gzaas.android.widget.AlertDialogHelper;
  */
 public class SendActivity extends ApiActivity implements OnClickListener {
 	
-	private static final String KEY_URL = "url";
+	private static final String TAG ="SendActivity";
 	private String				mURL;
 	private TextView 			mUrlTextView;
-	private ProgressBar 		mProgress;
+ 	private ProgressBar 		mProgress;
 	private LinearLayout		mButtonsLayout;
     
     @Override    
@@ -50,30 +44,21 @@ public class SendActivity extends ApiActivity implements OnClickListener {
         mButtonsLayout = (LinearLayout) findViewById(R.id.ll_buttons);
         
         /* Call server */
-        if ( savedInstanceState == null ) {
-        	setLoading(true);
-        	Bundle extras = getIntent().getExtras();
-            String message = extras.getString(PreviewActivity.KEY_MESSAGE);
-            Style style = (Style) extras.getSerializable(PreviewActivity.KEY_STYLE);
-            callServer(message, style);
-        }
-        /* Show URL */
-        else {
-        	mURL = savedInstanceState.getString(KEY_URL);
-        	setURLView();
-        }
+    	setLoading(true);
+    	Bundle extras = getIntent().getExtras();
+        String message = extras.getString(PreviewActivity.KEY_MESSAGE);
+        Style style = (Style) extras.getSerializable(PreviewActivity.KEY_STYLE);
+        callServer(message, style);
         
         /* Buttons */
         Button btnCopy = (Button) findViewById(R.id.btn_copy);
-        Button btnMail = (Button) findViewById(R.id.btn_mail);
         Button btnGnew = (Button) findViewById(R.id.btn_gnew);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/chewy.ttf");
         btnCopy.setTypeface(tf);
-        btnMail.setTypeface(tf);
         btnGnew.setTypeface(tf);
         btnCopy.setOnClickListener(this);
-        btnMail.setOnClickListener(this);
         btnGnew.setOnClickListener(this);
+        findViewById(R.id.btn_share).setOnClickListener(this);
     }
     
 	@Override
@@ -85,11 +70,12 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 	    	Toast.makeText(this, "copy to clipboard",  Toast.LENGTH_SHORT).show();
 			break;
 			
-		case R.id.btn_mail:
-			Intent email = new Intent(android.content.Intent.ACTION_SEND);
-	        email.setType("plain/text");
-	        email.putExtra(android.content.Intent.EXTRA_TEXT, mURL);
-	        startActivity(Intent.createChooser(email, "Send mail..."));
+		case R.id.btn_share:
+			Intent share = new Intent();
+			share.setAction(Intent.ACTION_SEND);
+			share.putExtra(Intent.EXTRA_TEXT, mURL);
+			share.setType("text/plain");
+			startActivity(share);
 			break;
 			
 		case R.id.btn_gnew:
@@ -99,12 +85,6 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 			break;
 		}
 	}
-    
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-    	outState.putString(KEY_URL, mURL);
-    	super.onSaveInstanceState(outState);
-    }
     
     @Override
 	public boolean onCreateOptionsMenu (Menu opcion) {
@@ -127,7 +107,8 @@ public class SendActivity extends ApiActivity implements OnClickListener {
     
     @Override
     protected void handleMessage(Message msg) {
-    	setURLView();
+    	setLoading(false);
+    	mUrlTextView.setText(mURL);
     }
     
     /**
@@ -145,11 +126,9 @@ public class SendActivity extends ApiActivity implements OnClickListener {
 					Log.d("", "callServer() apikey=" + apikey);
 					mURL = Connector.get().write(apikey, message, style);
 					getHandler().sendEmptyMessage(0);
-				} catch (ClientProtocolException e) {
-				} catch (IOException e) {
-				} catch (JSONException e) {
-				} catch (URISyntaxException e) {
-				} //TODO
+				} catch (Exception e) {
+					Log.e(TAG, "Could not sent the message!", e);
+				}
 			}
 		});
     	thread.start();
@@ -161,9 +140,4 @@ public class SendActivity extends ApiActivity implements OnClickListener {
     	mButtonsLayout.setVisibility(loading ? View.INVISIBLE : View.VISIBLE);
     }
     
-    private void setURLView() {
-    	setLoading(false);
-    	mUrlTextView.setText(mURL);
-    }
-
 }

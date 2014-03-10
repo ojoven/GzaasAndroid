@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.gzaas.android.style.Style;
 import com.gzaas.android.widget.ColorPickerDialog;
 import com.gzaas.android.widget.ColorPickerDialog.OnColorChangedListener;
+import com.gzaas.android.widget.EditDialog;
+import com.gzaas.android.widget.EditDialog.OnTextListener;
 import com.gzaas.android.widget.FontSelectorDialog;
 import com.gzaas.android.widget.FontSelectorDialog.OnFontChangedListener;
 
@@ -105,6 +107,19 @@ public class PreviewActivity extends Activity {
 				}
 			});
 			dialog.show();
+			return true;
+			
+		case R.id.menu_text:
+			EditDialog editdialog = new EditDialog(this, mMessage);
+			editdialog.setOnTextChanged(new OnTextListener() {
+				
+				@Override
+				public void onTextChanged(String text) {
+					mText.setText(text);
+					mMessage = text;
+				}
+			});
+			editdialog.show();
 			return true;
 			
 		default:

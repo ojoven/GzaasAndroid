@@ -1,11 +1,5 @@
 package com.gzaas.android;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,16 +18,17 @@ import android.widget.TextView;
 import com.gzaas.android.api.ApiKeyManager;
 import com.gzaas.android.api.Connector;
 import com.gzaas.android.style.Style;
+import com.gzaas.android.util.Utils;
 import com.gzaas.android.widget.AlertDialogHelper;
-import com.gzaas.android.widget.BaseProgressDialog;
+import com.gzaas.android.widget.ProgressDialog;
 
 /**
  *	Home activity.
  */
 public class HomeActivity extends ApiActivity {
 	
-	private static final String		TAG = HomeActivity.class.getName();
-	private BaseProgressDialog		mProgressDialog;
+	private static final String	TAG = HomeActivity.class.getName();
+	private ProgressDialog		mProgressDialog;
 		
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,24 +88,22 @@ public class HomeActivity extends ApiActivity {
 	 * Call to the server to obain the API Key.
 	 */
 	private void callServer() {
-		mProgressDialog = new BaseProgressDialog(this);
-		mProgressDialog = new BaseProgressDialog(this);
-		mProgressDialog.setMessage(R.string.loading);
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog = new ProgressDialog(this);
 		mProgressDialog.show();
 		Thread thread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
-					String apikey = Connector.get().apikey();
+					String deviceId = Utils.getDeviceId(getApplicationContext());
+					String apikey = Connector.get().apikey(deviceId);
 					Log.d(TAG, "apikey=" + apikey);
 					ApiKeyManager.get(getApplicationContext()).write(apikey);
 					getHandler().sendEmptyMessage(0);
-				} catch (ClientProtocolException e) {
-				} catch (URISyntaxException e) {
-				} catch (IOException e) {
-				} catch (JSONException e) {
-				} //TODO
+				} catch (Exception e) {
+					Log.e(TAG, "Could not get a API key!", e);
+				}
 			}
 		});
 		thread.start();

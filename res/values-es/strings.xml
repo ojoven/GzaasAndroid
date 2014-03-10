@@ -4,11 +4,10 @@
     <string name="app_name">gzaas!</string>
     <string name="slogan">My full screen messages.</string>
     <string name="gzaasit">gzaas it!</string>
-    <string name="loading">Cargando</string>
     <string name="info_title">Info</string>
 	<string name="info_message">
         <![CDATA[
-        <p>Esto es un cliente<a href="http://gzaas.com">gzaas.com</a> de código abierto para Android.
+        <p>Esta app es un cliente <a href="http://gzaas.com">gzaas.com</a> de código abierto para Android.
         El código esta alojado en <a href="https://github.com/charlescarmichael/GzaasAndroid">Github</a>.</p>
         By <a href="http://www.capsule.es" >Capsule StudIO</a>.
         ]]>
@@ -21,10 +20,12 @@
     <string name="menu_color_text">Color del texto</string>
     <string name="menu_color_background">Color del fondo</string>
     <string name="menu_font">Fuente</string>
+    <string name="menu_text">Texto</string>
     <string name="select_style">Seleciona un estilo predeterminado</string>
     <string name="share">Comparte este enlace:</string>
     <string name="copy">Copiar</string>
-    <string name="mail">Mail</string>
     <string name="gnew">Nuevo</string>
+    
+    <string name="cd_share">Comparte tu gzaas.</string>
 
 </resources>

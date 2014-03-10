@@ -1,4 +1,3 @@
-
 # built application files
 .apk
 *.ap_
@@ -19,3 +18,8 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+.settings
+
+# Ant stuff
+ant.properties
+capsule.keystore
