@@ -1,4 +1,3 @@
-
 # built application files
 .apk
 *.ap_
@@ -23,5 +22,4 @@ local.properties
 
 # Ant stuff
 ant.properties
-android-keystore
-
+capsule.keystore
